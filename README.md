@@ -1,0 +1,29 @@
+# Trafford_Model_Algorithm
+A plug-in eclipse program that runs the 'Trafford Burglary Model' analysis techniques in ArcGIS, to help detect future crime occurrences and support operational police resources. 
+
+Trafford Model Toolbox User Guide
+
+Welcome to the world of the Trafford Burglary Model toolbox! This text guide was created to support the use of the toolbox and the tools contained within it. The toolbox is contained within both Arc Toolbox and the "Trafford_Model_Tools" toolbar, and contains three separate tools which are outlined below. 
+To implement the full Trafford Burglary Model and undertake an analysis of the model, users are advised to implement the tools as specified in the order below (and specifically, the 'RandomPointCreator' tool prior to use of the BurglaryComparativeTool, as also discussed below). 
+Both the TraffordBurglaryModel and BurglaryComparativeTool tools can be run programmatically via corresponding buttons on the toolbar, and can be edited by the user to update the analysis for future weeks. These tools can also be run via the Arc Toolbox function, within the "Trafford_Burglary_Model_Toolbox". At present, the RandomPointCreator tool can only be implemented through the Arc Toolbox function (discussed below). 
+
+TraffordBurglaryModel Tool
+This tool takes in burglary offence data for the preceding three weeks, drawing 400 metre buffers around these offences across each of these weeks, with increased (predicted) risk for more recent offences. The tool then takes the current weeks burglaries, and analyses the number of offences from this week predicted by high-risk areas/ buffers (offences in the last week), high-medium risk areas (offences in the last two weeks), and all risk areas (all offences over the preceding three weeks). The offences predicted by each of these risk areas are then saved as a separate feature layer on the map document with the universal prefix, "Export_Ouput", followed by the labels of 'high risk predicted', 'high medium risk predicted', and 'all risk predicted' (respectively). Furthermore, dbf versions of the predicted offences, together with their co-ordinates and reference numbers across each of the three risk groups are also saved to the file directory in which the current ArcMap document and Arc Toolbox are saved. These files can then be opened using the Microsoft Excel package. 
+
+The following two tools are used to analyse the effectiveness of the Trafford Model approach. However, as detailed below the RandomPointCreator MUST be implemented via the toolbox in Arc and not programmatically, and undertaken prior to implementing the BurglaryComparativeTool. 
+RandomPointCreator Tool
+This tool is used to create random burglary points across the district of Leeds. These points can then be used for comparison purposes, by comparing the extent of predictive ability of 'actual' and 'randomised' offence locations. Despite significant efforts from the author, this tool cannot currently be implemented programmatically and will 'crash' the Arc program if the tool's button is selected. Therefore, this tool can only be executed via the Arc Toolbox function, under the 'RandomPointCreator' tool in the "Trafford_Burglary_Model_Toolbox".
+Again, this tool MUST be implemented prior to the BurglaryComparativeTool, to generate the random offence points "RandomPoints" required to input into the BurglaryComparativeTool tool.. 
+Once the tool is selected by the user, the parameters that need to be entered are as follows;
+	Default.gdb = leave as default location. 
+	Constraining Feature Class = Select "Leeds_district" from the drop-down menu (this ensures that the random burglary points are created only within this feature layer). 
+	Number of Points [value or field] - Long = Type "109" (This is the same number of offences as reported during the current week). 
+	Output Point Feature Class = Type "RandomPoints" (take care to type this EXACTLY, so that the resulting layer can be read as the input feature for the BurglaryComparativeTool button. 
+
+BurglaryComparativeTool Tool
+This tool implements the same methods as the TraffordBurglaryModel tool, however when exploring the predictive ability of the Trafford Model, whilst the TraffordBurglaryModel takes in the current week's offences, the BurglaryComparativeTool uses the randomised offences generated from the RandomPointCreator tool. As noted above this is used for comparison purposes with actual current offence data to assess the effectiveness of the Trafford Model approach. The randomised predicted offences are then saved as a feature layer to the map document.
+Whilst the layers and resulting outputs for this tool are largely the same as those within the TraffordBurglaryModel tool, these are named slightly differently, i.e. given the "Comparative" suffix, to distinguish their use within a different tool. Furthermore, the names given to the resulting feature layers for the predicted offences are slightly different; i.e. "high_risk_predicted_randomised", to distinguish these from the offences initially predicted using the TraffordBurglarymodel tool. 
+
+NB: Whilst results from the RandomPointCreator tool appear within a few seconds, upon selecting the TraffordBurglaryModel or BurglaryComparativeTool buttons it will take approximately 15-20 seconds for results to appear. Upon the programmatic execution of these two latter tools, a number of small consecutive 'pop-up' windows will appear (approximately 54 and 36, respectively for each tool), informing the user of the processes undertaken to implement the tool. These can be closed through clicking on 'ok'. Whilst these windows usually appear 'in front' of the ArcGIS window, sometimes these can appear behind the active window of the user. 
+
+NB2: The raw data used for the subsequent map to demonstrate this work is provided within the 'RawData' folder, in the directory for the submitted project. 
