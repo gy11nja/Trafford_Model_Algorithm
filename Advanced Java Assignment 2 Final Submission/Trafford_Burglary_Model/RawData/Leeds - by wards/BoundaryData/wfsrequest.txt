@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wfs:GetFeature maxFeatures="2147483647" outputFormat="SHAPE-ZIP"
+  service="WFS" version="1.0.0" xmlns:ogc="http://www.opengis.net/ogc"
+  xmlns:gml="http://www.opengis.net/gml" xmlns:wfs="http://www.opengis.net/wfs">
+  <wfs:Query typeName="ukb:england_caswa_2001">
+    <ogc:Filter>
+      <ogc:Or>
+        <ogc:PropertyIsLike escape="!" singleChar="#" wildCard="*">
+          <ogc:PropertyName>label</ogc:PropertyName>
+          <ogc:Literal>08DA*</ogc:Literal>
+        </ogc:PropertyIsLike>
+      </ogc:Or>
+    </ogc:Filter>
+  </wfs:Query>
+</wfs:GetFeature>
